@@ -25,7 +25,7 @@ To access this project on your local files, you can clone it using these steps
 
 ## Live Site
 
-View[live]()
+[View live]()
 
 ##  Contacts
 
