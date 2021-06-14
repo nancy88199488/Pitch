@@ -3,7 +3,8 @@ import os
 class Config:
 
     SECRET_KEY = os.environ.get('SECRET_KEY')
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://postgres:nancy@localhost/watchlist'
+    SQLALCHEMY_TRACK_MODIFICATIONS=True 
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://postgres:nancy@localhost/pitch'
     UPLOADED_PHOTOS_DEST ='app/static/photos' #specifies the destination where we store our IMAGES
 
     #  email configurations
@@ -20,11 +21,21 @@ class Config:
 class ProdConfig(Config):
      SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
 
+class ProdConfig(Config):
+  SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL","")
+  if SQLALCHEMY_DATABASE_URI.startswith("postgres://"):
+    SQLALCHEMY_DATABASE_URI =SQLALCHEMY_DATABASE_URI.replace("postgres://","postgresql://",1)
+
 
 class DevConfig(Config):
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://postgres:nancy@localhost/pitch'
     DEBUG = True
+
+class TestConfig(Config):
+  SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://postgres:nancy@localhost/pitch_test'
 
 config_options = {
 'development':DevConfig,
-'production':ProdConfig
+'production':ProdConfig,
+'test':TestConfig
 }
