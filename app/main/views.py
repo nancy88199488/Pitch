@@ -8,10 +8,10 @@ from .. import db,photos
 @main.route('/')
 def index():
     pitches = Pitch.query.all()
-    job = Pitch.query.filter_by(category = 'Job').all() 
-    event = Pitch.query.filter_by(category = 'Events').all()
-    advertisement = Pitch.query.filter_by(category = 'Advertisement').all()
-    return render_template('index.html', job = job,event = event, pitches = pitches,advertisement= advertisement)
+    business= Pitch.query.filter_by(category = "Business").all() 
+    lifestyle = Pitch.query.filter_by(category = 'Lifestyle').all()
+    promotion = Pitch.query.filter_by(category = 'Promotion').all()
+    return render_template('index.html', business= business,lifestyle = lifestyle, pitches = pitches,promotion = promotion)
 
 @main.route('/create_new', methods = ['POST','GET'])
 @login_required
@@ -73,7 +73,7 @@ def updateprofile(name):
 def update_pic(name):
     user = User.query.filter_by(username = name).first()
     if 'photo' in request.files:
-        filename = photos.save(request.files['photo'])
+        filename = photos.save(request.files['photos'])
         path = f'photos/{filename}'
         user.profile_pic_path = path
         db.session.commit()
