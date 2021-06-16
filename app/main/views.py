@@ -13,7 +13,7 @@ def index():
     promotion = Pitch.query.filter_by(category = 'Promotion').all()
     return render_template('index.html', business = business,lifestyle = lifestyle, pitches = pitches,promotion = promotion)
 
-@main.route('/create_new', methods = ['POST','GET'])
+@main.route('/new_pitch', methods = ['POST','GET'])
 @login_required
 def new_pitch():
     form = PitchForm()
@@ -23,10 +23,10 @@ def new_pitch():
         category = form.category.data
         user_id = current_user
         new_pitch_object = Pitch(post=post,user_id=current_user._get_current_object().id,category=category,title=title)
-        new_pitch_object.save_p()
+        new_pitch_object.save_pitch()
         return redirect(url_for('main.index'))
         
-    return render_template('create_pitch.html', form = form)
+    return render_template('new_pitch.html', form = form)
 
 @main.route('/comment/<int:pitch_id>', methods = ['POST','GET'])
 @login_required
