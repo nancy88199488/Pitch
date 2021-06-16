@@ -4,10 +4,10 @@
     {% if pitches %} {% for category in pitches %}
     <div class="col-md-4">
       <div class="thumbnail" id="carded">
-        <h5 class="card-header">{{category.title}}</h5>
+        <h5 class="card-header" style="font-size: 18px;">{{category.title}}</h5>
         <div class="card-body">
           <p>{{category.post}}</p>
-          <p class="text-center">Category: {{pitch.category}}</p>
+          <p class="text-center" style="font-size: 18px;">Category: {{pitch.category}}</p>
           <footer class="blockquote-footer text-center">
             Posted by: {{category.user.username}}
           </footer>
@@ -44,7 +44,7 @@
     {% endfor %} {% else %}
     <div class="card w-90 mb-3">
       <div class="card-body">
-        <p class="card-title">Category not yet posted</p>
+        <p class="card-title" style="font-size: 18px;">Category not yet posted</p>
       </div>
     </div>
     {% endif %}
