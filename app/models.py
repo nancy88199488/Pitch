@@ -2,7 +2,7 @@ from  flask_sqlalchemy.model import Model
 from .import db, login_manager
 from datetime import datetime
 from werkzeug.security import generate_password_hash,check_password_hash
-from flask_login import UserMixin
+from flask_login import UserMixin,current_user
 
 
 @login_manager.user_loader
@@ -16,12 +16,11 @@ class User(UserMixin,db.Model):
     email = db.Column(db.String(255),unique = True,nullable = False)
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
-    password_hash = db.Column(db.String(255), nullable=False)  
-    pass_secure = db.Column(db.String(255), nullable=False)
-    pitches = db.relationship('Pitch', backref='users', lazy='dynamic')
-    comment = db.relationship('Comment', backref='users', lazy='dynamic')
-    upvote = db.relationship('Upvote',backref='users',lazy='dynamic')
-    downvote = db.relationship('Downvote',backref='users',lazy='dynamic')
+    password_secure = db.Column(db.String(255), nullable=False)
+    pitches = db.relationship('Pitch', backref='user', lazy='dynamic')
+    comment = db.relationship('Comment', backref='user', lazy='dynamic')
+    upvote = db.relationship('Upvote',backref='user',lazy='dynamic')
+    downvote = db.relationship('Downvote',backref='user',lazy='dynamic')
     
 
 @property
@@ -31,11 +30,11 @@ def password(self):
 
 @password.setter
 def password(self, password):
-            self.pass_secure = generate_password_hash(password)
+            self.password_secure = generate_password_hash(password)
 
 
 def verify_password(self,password):
-            return check_password_hash(self.pass_secure,password)
+            return check_password_hash(self.password_secure,password)
 
 def save_u(self):
         db.session.add(self)
