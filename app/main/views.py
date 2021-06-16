@@ -11,7 +11,7 @@ def index():
     business= Pitch.query.filter_by(category = "Business").all() 
     lifestyle = Pitch.query.filter_by(category = 'Lifestyle').all()
     promotion = Pitch.query.filter_by(category = 'Promotion').all()
-    return render_template('index.html', business= business,lifestyle = lifestyle, pitches = pitches,promotion = promotion)
+    return render_template('index.html', business = business,lifestyle = lifestyle, pitches = pitches,promotion = promotion)
 
 @main.route('/create_new', methods = ['POST','GET'])
 @login_required
@@ -110,3 +110,4 @@ def dislike(id):
     new_downvote = Downvote(user = current_user, pitch_id=id)
     new_downvote.save()
     return redirect(url_for('main.index',id = id))
+
